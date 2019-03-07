@@ -34,6 +34,7 @@ import org.georchestra.console.ds.RoleDao;
 import org.georchestra.console.dto.Account;
 import org.georchestra.console.dto.AccountFactory;
 import org.georchestra.console.dto.orgs.Org;
+import org.georchestra.console.dto.orgs.OrgDetail;
 import org.georchestra.console.dto.orgs.OrgExt;
 import org.georchestra.console.dto.Role;
 import org.georchestra.console.mailservice.EmailFactory;
@@ -150,7 +151,7 @@ public final class NewAccountFormController {
 	public void initForm(WebDataBinder dataBinder) {
 		dataBinder.setAllowedFields(new String[]{"firstName","surname", "email", "phone",
 				"org", "title", "description", "uid", "password", "confirmPassword", "createOrg", "orgName",
-				"orgShortName", "orgAddress", "orgType", "orgCities", "recaptcha_response_field"});
+				"orgShortName", "orgAddress", "orgType", "orgCities", "orgDescription", "orgUrl", "recaptcha_response_field"});
 	}
 
 	@RequestMapping(value="/account/new", method=RequestMethod.GET)
@@ -210,18 +211,21 @@ public final class NewAccountFormController {
 			try {
 				Org org = new Org();
 				OrgExt orgExt = new OrgExt();
+				OrgDetail orgDetail = new OrgDetail();
 
 				// Generate textual identifier based on name
 				String orgId = orgDao.generateId(formBean.getOrgShortName());
 				org.setId(orgId);
 				orgExt.setId(orgId);
+				orgDetail.setId(orgId);
 
 				// Store name, short name, orgType and address
 				org.setName(formBean.getOrgName());
 				org.setShortName(formBean.getOrgShortName());
 				orgExt.setAddress(formBean.getOrgAddress());
 				orgExt.setOrgType(formBean.getOrgType());
-
+				orgExt.setDescription(formBean.getOrgDescription());
+				orgDetail.setUrl(formBean.getOrgUrl());
 				// Parse and store cities
 				orgCities = orgCities.trim();
 				if (orgCities.length() > 0)
@@ -229,9 +233,11 @@ public final class NewAccountFormController {
 
 				org.setPending(this.moderatedSignup);
 				orgExt.setPending(this.moderatedSignup);
+				orgDetail.setPending(this.moderatedSignup);
 				// Persist changes to LDAP server
 				orgDao.insert(org);
 				orgDao.insert(orgExt);
+				orgDao.insert(orgDetail);
 
 				// Set real org identifier in form
 				formBean.setOrg(orgId);
