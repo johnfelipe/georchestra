@@ -1,0 +1,9 @@
+dn: cn=georchestra, cn=schema, cn=config
+objectClass: olcSchemaConfig
+cn: georchestra
+olcObjectClasses: ( 2.25.1.2.3.6
+    NAME 'georchestraOrg'
+    DESC 'georchestra org'
+    SUP top
+    AUXILIARY
+    MAY (jpegphoto $ labeledURI))
