@@ -10,3 +10,12 @@ As a result, the LDAP DIT should be upgraded with the provided [upgrade from 18.
 
 Please note that running a 18.12 console on a 18.06 LDAP will make previously pending users and orgs considered as registered, valid objects (except that pending users will not have the required roles to log in).
 It is thus recommended to discard them before doing the transition to 18.12.
+
+
+## Frontend
+
+After https://github.com/georchestra/georchestra/issues/2358
+
+Note that mapfishapp provides the option to display local files on the map. To do this, the file is uploaded to the mapfishapp backend. The maximum size of these file can be defined in the [datadir](https://github.com/georchestra/datadir/blob/18.12/mapfishapp/mapfishapp.properties#L23), but in certain cases, the Apache2 proxy could be more restrictive if the [`LimitRequestBody`](https://httpd.apache.org/docs/current/mod/mod_proxy.html#request-bodies) had been set to a lower limit. For a normal usage, you don't need to set the `LimitRequestBody`.
+
+https://github.com/georchestra/georchestra/pull/2467/files

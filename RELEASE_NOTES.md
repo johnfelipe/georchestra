@@ -2,8 +2,38 @@ The development branch is master. It can be used for testing and reporting
 errors.
 
 For production systems, you are advised to use the stable branch (currently
-18.06).
+18.12).
 This branch receives bug fixes as they arrive, during 12 months at least.
+
+
+Version 18.12
+=============
+
+Major highlights:
+ *
+
+New features:
+ * Add support for s3-geotiff coverage stores https://github.com/georchestra/georchestra/pull/2543 fixes https://github.com/georchestra/georchestra/issues/2225 see also https://github.com/georchestra/datadir/pull/140
+
+Enhancements:
+ * console - display user org as a link to Org #2452
+ * console - pattern enforced for login - 'letters, numbers, underscore, dash, dot' + 'starts with a letter' #2448
+ 
+
+Bug fixes:
+ * security-proxy: handle response headers before handling redirects #2516
+ * mapfishapp - vector layer query error #2501
+ * mapfishapp - printing https layers served by servers using a cert with SNI #2183
+ * console - fix broken delegations when user or role ldap uid changes https://github.com/georchestra/georchestra/pull/2473
+ * console - fixed misleading translations issue for the `title` field #2468
+ *
+
+Deprecations:
+ * PENDING role
+ *
+
+Read [how to migrate from 18.06 to 18.12](migrations/18.12/README.md).
+
 
 Version 18.06
 =============
